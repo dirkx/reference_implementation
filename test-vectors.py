@@ -20,12 +20,17 @@ __license__ = "Apache 2.0"
 import time
 from datetime import datetime, timedelta
 
-from LowCostDP3T import KeyStore
+from LowCostDP3T import KeyStore, BROADCAST_KEY
 import secrets
+import hashlib
+import hmac
 
 null_secret = bytes.fromhex('00000000000000000000000000000000')
 
 print("Secret: {}".format(null_secret.hex()))
+
+prf = hmac.new(null_secret, BROADCAST_KEY.encode(), hashlib.sha256).digest()
+print("PRF:    {}".format(prf.hex()))
 
 ks = KeyStore()
 ks.SKt = []
